@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<!-- 需求：双向绑定，实现实时修改父子组件中的相关值，然后下面的必须是上面的100倍，上面是下面的1/100 -->
+<body>
+  <div id="app">
+    <cpn :cnum1="num1" :cnum2="num2" @num1change="num1Ch" @num2change="num2Ch"></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h3>props:{{cnum1}}+{{typeof cnum1}}</h3>
+      <h3>data:{{denum1}}</h3>
+      <input type="text" v-model="denum1"> 
+      <h3>props:{{cnum2}}+{{typeof cnum2}}</h3>
+      <h3>data:{{denum2}}</h3>
+      <input type="text" v-model="denum2">
+    </div>
+  </template>
+
+  <script>
+    const va = new Vue({
+      el:"#app",
+      data:{
+        num1:1,
+        num2:2,
+      },
+      components:{
+        cpn:{
+          template:"#cpn",
+          props:{
+            cnum1:Number,
+            cnum2:Number
+          },
+          data(){
+            return {
+              denum1:this.cnum1,
+              denum2:this.cnum2
+            }
+          },
+          watch:{
+            denum1(newvalue,oldervalue){
+              console.log(newvalue+" "+oldervalue);
+              this.denum2 = this.denum1 * 100;
+              this.$emit("num2change",this.denum2);
+            },
+            denum2(newvalue, oldervalue) {
+              this.denum1 = this.denum2 / 100;
+              this.$emit("num1change", this.denum1);
+            },
+          }
+        }
+      },
+      methods:{
+        num1Ch(e){
+          this.num1 = parseFloat(e);
+          //这里会有一个小bug用watch的话
+        },
+        num2Ch(e) {
+          this.num2 = parseInt(e);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

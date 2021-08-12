@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+
+<script>
+  // 类似于回调地狱，解决见03
+  new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      console.log("hello world!")
+      console.log("hello world!")
+      console.log("hello world!")
+
+      setTimeout(()=>{
+        console.log("hello vue.js!")
+        console.log("hello vue.js!")
+        console.log("hello vue.js!")
+
+        setTimeout(()=>{
+          console.log("hello pbw!")
+          console.log("hello pbw!")
+          console.log("hello pbw!")
+        },1000)
+      },1000)
+    },1000)
+  })
+  
+
+
+  // 什么情况下使用Promise？一般情况下是有异步操作时，使用Promise对这个异步操作进行封装
+  // 1、Promise本身是一个类（实现PromiseConstructor接口） ---> 可以new成一个对象 ---> new执行的就是PromiseConstructor里面的new操作（见截图）
+  // 2、Promise需要传入一个参数 ---> 参数本身又是函数
+  // 3、传入的函数本身在回调时，Promise又会在其中加入参数  --->  加入的参数是：resolve（解决）和reject（拒绝） ---> 这两个又是函数
+  new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      // 调用resolve会跳转到then
+      resolve("hello world 3!")
+
+      // 调用reject会跳转到catch，见02
+    },500)
+  }).then(res=>{
+    console.log(res);
+  })
+</script>
+</html>

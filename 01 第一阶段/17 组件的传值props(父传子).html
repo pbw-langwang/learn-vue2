@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- cobj会报错，见83行; 按照这样写是对的，已经修改了 -->
+    <cpn :cmessage="message" :cmovielist="movieList" :cobj="obj"></cpn>
+
+    <!-- 不传入message使用默认值 -->
+    <cpn :cmovielist="movieList"></cpn>
+
+    <!-- 不传入movieList使用[]，会报错，见60行 -->
+    <!-- <cpn :cmessage="message"></cpn> -->
+    <!-- <cpn></cpn> -->
+    <!-- 报错：Invalid default value for prop "cmovielist": Props with type Object/Array must use a factory function to return the default value. -->
+    <!-- 翻译：道具“ cmovielist”的默认值无效: 类型为 Object/Array 的道具必须使用 工厂函数返回默认值（使用return） 。 -->
+    <!-- 见84行 -->
+
+    <!-- 不动态绑定就会导致，直接把字符串当成了传的值，定义类型后会报错 -->
+    <!-- <cpn cmessage="message" cmovielist="movieList"></cpn> -->
+
+    <!-- 遍历字符串实验,可以遍历 -->
+    <!-- <ul>
+      <li v-for="item in 'abcde'">{{item}}</li>
+    </ul> -->
+
+    <!-- 组件传值无法使用驼峰 -->
+    <cpn2 :cMovie="movieList"></cpn2>
+    <!-- 警告：Prop "cmovie" is passed to component <Anonymous>, but the declared prop
+       name is "cMovie". Note that HTML attributes are case-insensitive and camelCased 
+       props need to use their kebab-case equivalents when using in-DOM templates. 
+       You should probably use "c-movie" instead of "cMovie". 
+    -->
+    <!-- Prop“cmovie”被传递给component<Anonymous>，但声明的Prop name是“cMovie”。
+      注意，HTML属性不区分大小写，在DOM模板中使用时，camelcase属性需要使用它们的kebab大小写等价物。
+      你应该用“c-movie”代替“cMovie”。 
+    -->
+    <cpn2 :c-movie="movieList"></cpn2>
+  </div>
+</body>
+
+<template id="cpn">
+  <div>
+    <h2>这是一个组件</h2>
+    <p>这是父组件传的message:{{cmessage}}</p>
+    <ul>
+      <!-- 可以遍历字符串 -->
+      <li v-for='item in cmovielist'>{{item}}</li>
+    </ul>
+    <p>{{cobj.name}}</p>
+    <p>{{cobj.age}}</p>
+  </div>
+</template>
+
+<template id="cpn2">
+  <div>
+    <h2>-------------</h2>
+    <p>{{cMovie}}</p>
+    <ul>
+      <li v-for='item in cMovie'>{{item}}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+  const cpn = {
+    template:"#cpn",
+
+    // data(){},
+    // data虽然是函数，但是没有return依旧会报错
+
+    // props:["cmovielist","cmessage"],  不常用数组形式，主要是对象的形式较多
+
+    props:{
+      // 1、对象
+      cmessage:{
+        type:String, //限制传入的参数类型，不对会报错
+        default:"这是默认的message！" //如果没有传值的默认值
+      },
+
+
+      // 使用可以，但是必须传值代替[]，不然会报错
+      cmovielist:{
+        type:Array,
+        default:[]
+        // default(){
+        //   return []
+        // },
+      },
+
+
+      // 只要使用，不管传不传值，都会报错
+      //cobj:{
+      //  type:Object,
+      //  default:{}  
+      //},
+      //报错：Invalid default value for prop "cobj": Props with type Object/Array must use a factory function to return the default value.
+      //“cobj”的默认值无效: 类型为 Object/Array 的必须使用工厂函数返回默认值。
+
+      cobj:{
+        type:Object,
+        // 对象的增强写法
+        default(){
+          return {}
+        }
+      }
+    }
+  }
+
+  const cpn2 = {
+    template:"#cpn2",
+    props:{
+      cMovie:{
+        type:Array,
+        default(){
+          return []
+        }
+      }
+    }
+  }
+
+  let va = new Vue({
+    el:".app",
+    data:{
+      message:"这是一个有关组件传值的div",
+      movieList:["海贼王","姜子牙","哪吒","星游记"],
+      obj:{
+        name:"pbw",
+        age:19
+      }
+    },
+    components:{
+      cpn,
+      cpn2
+    }
+  })
+</script>
+</html>

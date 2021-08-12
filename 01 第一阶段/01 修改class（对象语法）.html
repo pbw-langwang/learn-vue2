@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .act {
+      color: red;
+    }
+
+    .ttt {
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="div">
+    <h2 class="title" v-bind:class="{'act':act,'ttt':ttt}">{{mess}}</h2>
+    <h2 class="title" v-bind:class="{act:act,ttt:ttt}">{{mess}}</h2>
+    <!-- key的''可要可不要，value必须不要，不然会被当成字符串 -->
+
+    <h2 class="title" v-bind:class="classes()">{{mess}}</h2>
+    <!-- 这里的classes后面的()不要掉 -->
+
+    <!-- 掉了括号相当于没有执行函数 -->
+    <h2 class="title" v-bind:class="classes">{{mess}}</h2>
+
+
+    <button v-on:click="click1">act按钮</button>
+    <button v-on:click="click2">ttt按钮</button>
+  </div>
+</body>
+<script>
+  let vd = new Vue({
+    el: ".div",
+    data: {
+      mess: "this is h2",
+      act: true,
+      ttt: true
+    },
+    methods: {
+      click1() {
+        this.act = !this.act
+      },
+      click2() {
+        this.ttt = !this.ttt
+      },
+      classes() {
+        return { 'act': this.act, 'ttt': this.ttt }
+        // 这里的this不要掉
+      }
+    }
+  })
+</script>
+
+</html>

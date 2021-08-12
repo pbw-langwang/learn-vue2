@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 没有参数，()可要可不要 -->
+    <button @click="btn1Click()">按钮1</button>
+    <button @click="btn1Click">按钮1</button>
+
+    <!-- 写方法时省略了()，但是方法本身又需要一个参数 -->
+    <button @click="btn2Click(123)">按钮2</button>
+    <button @click="btn2Click()">按钮2</button>  <!--打印undefined-->
+
+    <!-- vue会默认把浏览器自己生成的event事件作为参数传入方法 -->
+    <button @click="btn2Click">按钮2</button>
+
+
+    <!-- 定义方法时，既需要event参数，又需要别的参数 -->
+    <button @click="btn3Click('pbw',event)">按钮3</button>
+    <!-- [Vue warn]: Property or method "event" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property. -->
+    <!-- 把event当成了方法或者变量 -->
+    <!-- 前面有讲，只有数字才不会被当作变量或方法；如果不是数字，需要用引号，搞成字符串 -->
+
+    <button @click="btn3Click">按钮3</button>
+    <!-- 把event自动赋值给第一个参数，后一个参数为undefined -->
+
+    <button @click="btn3Click('pbw',$event)">按钮3</button>
+    <!-- 如何手动的将浏览器产生的event对象传递给方法 -->
+
+    <div @click="divClick">
+      <p>aaa</p>
+      <button @click="btn4Click">按钮4 bbb</button>
+    </div>
+
+    <!-- .stop修饰符阻止冒泡 -->
+    <div @click="divClick">
+      <p>aaa</p>
+      <button @click.stop="btn4Click">按钮4 bbb</button>
+    </div>
+
+    <!-- .prevent阻止默认事件 -->
+    <div>
+      <form action="aaa">
+        <input type="submit" value="提交" @click="subClick">
+      </form>
+      <form action="bbb">
+        <input type="submit" value="提交" @click.prevent="subClick">
+      </form>
+    </div>
+
+    <!-- 监听键盘的点击事件 -->
+    <input type="text" @keyup="keyUp">
+    <input type="text" @keyup.enter="keyUp">
+
+  </div>
+</body>
+<script>
+  let btnV = new Vue({
+    el: "#app",
+    data: {
+
+    },
+    methods: {
+      // es6增强写法
+      btn1Click() {
+        console.log("btn1Click");
+      },
+      btn2Click(event) {
+        console.log(event);
+      },
+      btn3Click(abc, event) {
+        console.log("++++", abc, event);
+      },
+
+
+      divClick() {
+        console.log("aaa");
+      },
+      btn4Click() {
+        console.log("bbb");
+      },
+
+
+      subClick() {
+        console.log("subClick");
+      },
+
+      keyUp() {
+        console.log("keyUp");
+      }
+    }
+  })
+
+  // 测试函数，如果函数需要参数,但是没有传入，那么函数的形参为undefined
+  function abc(name) {
+    console.log(name);
+  }
+
+  abc("pbw");
+  abc();//打印undefined
+</script>
+
+</html>

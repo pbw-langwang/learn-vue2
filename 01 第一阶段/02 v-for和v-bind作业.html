@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .act {
+      color: red;
+    }
+
+    .a {
+      border:dotted 10px red;
+      margin: 50px;
+      padding: 50px;
+      background-color: aqua;
+    }
+    .b {
+      width: 200px;
+      height: 200px;
+    }
+    .c{
+      border:dotted 10px red;
+      margin: 50px;
+      padding: 50px;
+      background-color: aqua;
+      background-clip: content-box;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 测试 background-clip -->
+  <div class="a">
+    <p class="b">akjfhahkjanf</p>
+  </div>
+  <div class="c">
+    <p class="b">akjfhahkjanf</p>
+  </div>
+
+
+  <!-- vue的作业 -->
+  <div class="div">
+    <ul>
+      <!-- //<li v-for="(m,i) in arr" v-bind:class="{'act':act[i]===i}" v-on:click="click(i)">{{m}}{{i}}</li> -->
+      <li v-for="(m,i) in arr" v-bind:class="{'act':act[i]}" v-on:click="click(i)">{{m}}{{i}}</li>
+    </ul>
+  </div>
+
+  <div class="app">
+    <ul>
+      <li v-for="(m,i) in arr" v-bind:class="{'act':i === currentIndex}" @click="click(i)">{{m}}{{i}}</li>
+    </ul>
+  </div>
+</body>
+
+<script>
+  let vd = new Vue({
+    el: ".div",
+    data: {
+      arr: ["火影忍者", "海贼王", "进击的巨人", "钢之炼金术师"],
+      // act: [true, true, true, false]
+
+      act: [],
+    },
+    methods: {
+      click(i) {
+        // console.log(this.act);
+        // this.act[i] = !this.act[i];
+        // this.act.push();
+
+        // Vue.set(this.act, i, !this.act[i]);
+        // console.log(this.act);
+
+        // Vue.set(this.act, i, i);     X
+
+        if (this.act[i] !== undefined) {
+          Vue.set(this.act, i, !this.act[i]);
+          console.log(this.act);
+        } else {
+          Vue.set(this.act, i, true);
+          console.log(this.act);
+        }
+      }
+    }
+  })
+
+
+  let va = new Vue({
+    el: ".app",
+    data: {
+      arr: ["火影忍者", "海贼王", "进击的巨人", "钢之炼金术师"],
+      currentIndex: 0
+    },
+    methods: {
+      click(i) {
+        this.currentIndex = i;
+      }
+    }
+  })
+</script>
+
+</html>

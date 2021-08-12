@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="app">
+    <aaa></aaa>
+    <!-- 组件也是有作用域的，你要使用：1、全局注册 2、在要放入的挂载元素上声名 -->
+    <!-- <www></www>  //报错：未定义的www element-->
+    <hr>
+
+    <div>
+      <yyy v-if="show"></yyy>
+      <button @click="click">按钮1</button>  <!--控制yyy和my-cpn-->
+    </div>
+    <my-cpn v-if="!show"></my-cpn>  <!-- 这个show是父组件里面的show决定的 -->
+  </div>
+</body>
+
+<script>
+  // 全局组件注册语法糖，省略了Vue.extend({})，但其实内部依旧是调用了extend
+  Vue.component("aaa", {
+    template: `
+    <div>
+      <p>全局组件{{m}}</p>
+    </div>
+  `,
+    // 组件里面的data必须是函数
+    data() {
+      return {
+        m: "aaa"
+      }
+    },
+  })
+
+
+  // 一个组件可以重复注册好多次
+  // 子组件
+  const cpn1 = Vue.extend({
+    template: `
+      <div>
+        <p>全局/局部  组件yyy</p>
+        <p>也是局部组件www</p>
+        <input type="text">
+      </div>
+    `
+  })
+  Vue.component('yyy', cpn1);
+
+  //父组件（就算先改变了show的值，后来再次通过按钮1切换回来，还是false）
+  const cpn2 = Vue.extend({
+    data() {
+      return {
+        show: true
+      }
+    },
+    template: `
+        <div>
+          <h2>这是标题2</h2>
+          <p>局部组件my-cpn</p>
+          <www></www>
+          <yyy v-if="!show"></yyy>
+          <button @click="click">按钮2</button> 
+          <!--控制这个yyy，show也是该组件里面的，而不能访问vue实例中的-->
+        </div>
+      `,
+    // Property or method "show" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property.
+    // 属性或方法 “show”  没有在实例上定义   ，而是在呈现期间引用。通过初始化属性，确保该属性在数据选项或基于类的组件中是反应性的。
+    // 组件内部无法访问vue实例里面的数据；上面是解决办法，和单独定义组件一样，data使用函数并return(因为函数的形式可以防止引用同一个地址，而导致一改全改，见16)
+    methods: {
+      click() {
+        this.show = !this.show;
+      }
+    },
+    // 这里的show和引用该组件的父组件里面的show互不打扰
+    components: {
+      'www': cpn1,
+
+      // 'zzz': cpn2,
+      //报错：Uncaught ReferenceError: Cannot access 'cpn2' before initialization
+      //翻译：未捕获“在初始化之前无法访问引用cpn2”
+    }
+  })
+
+  //可以看作是最大的父组件（root组件）
+  const va1 = new Vue({
+    el: ".app",
+    data: {
+      show: false,
+    },
+    methods: {
+      click() {
+        this.show = !this.show;
+      }
+    },
+    filters: {},
+    computed: {},
+    components: {
+      'my-cpn': cpn2
+    },
+  })
+</script>
+
+</html>

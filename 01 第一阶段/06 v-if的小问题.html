@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <div v-if="show">
+      <label for="username">
+        用户登陆：
+      </label>
+      <input type="text" id="username" placeholder="输入用户账号" key="a">
+    </div>
+    <div v-else>
+      <label for="email">
+        邮箱登陆：
+      </label>
+      <input type="email" id="email" placeholder="输入邮箱账号" key="b">
+    </div>
+
+    <button @click="show = !show">切换方式</button>
+  </div>
+
+
+  <!-- 不含key的input会共用，type一不一样都会 -->
+  <div id="app2">
+    <div v-if="show">
+      <label for="username">
+        用户登陆：
+      </label>
+      <input type="text" id="username" placeholder="输入用户账号">
+    </div>
+    <div v-else>
+      <label for="email">
+        邮箱登陆：
+      </label>
+      <input type="email" id="email" placeholder="输入邮箱账号">
+    </div>
+
+    <button @click="show = !show">切换方式</button>
+  </div>
+
+</body>
+
+<script>
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      show: true,
+    },
+  })
+
+  let vm2 = new Vue({
+    el: "#app2",
+    data: {
+      show: true,
+    },
+  })
+</script>
+
+</html>

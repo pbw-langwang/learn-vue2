@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cpn></cpn>
+  </div>
+  
+  <template id="cpm">
+    <div>
+      <h3>这是子组件</h3>
+      <button @click="btnclick">按钮</button>
+    </div>
+  </template>
+
+  <script>
+    const cpn = {
+      template:"#cpm",
+      methods:{
+        btnclick(){
+          // 访问父组件，很少使用，会使耦合度变大，不利于组件复用
+          console.log(this.$parent);  //会打印一个Vue对象而不是VueComponent对象，因为其父组件就是Vue实例
+          // 访问跟组件，很少使用，因为项目中根组件里面一般没有东西
+          console.log(this.$root);  //访问根组件，因为没有嵌套，所以和上一个打印一样的
+        }
+      }
+    }
+    const va = new Vue({
+      el:"#app",
+      data:{
+        me:"famfhkajhfk",
+      },
+      methods:{
+        a(){
+          console.log("aaaaaaaaa");
+        }
+      },
+      components:{
+        cpn
+      },
+      filters:{},
+      computed:{}
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  const a = "abcde";
+  let b1 = "abcde";
+  console.log(a[2]);
+  a[2] = "a";
+  b1[2] = "a";
+  console.log(a+"  "+ b1);
+  //字符串可以通过下标读取，但是不能更改
+
+  const name2 = "pbw";
+  console.log(name2);
+
+  // name2 = "wcz";
+  // console.log(name2);
+  // 报错：Assignment to constant variable.
+  //对常量变量赋值
+
+  const obj = {
+    name:"pbw",
+    age:20
+  }
+  obj.name = "wcz"
+  console.log(obj);
+  // 可以改变对象里面的属性
+
+  const arr = [1,2,3,4,5];
+  arr[2]=10;
+  arr.push(6);
+  console.log(arr);
+  // 可以改变数组里面的值
+
+  for(let i = 0;i<5;i++){
+    const a = 10;
+    var b = 5;
+    let c = 10;
+  }
+  // console.log(a)
+  // 报错：a is not defined
+  console.log(b);
+  // console.log(c); //报错：c is not defined
+
+  // const name;
+  // name = 123;
+  // console.log(name);
+  // 报错：Missing initializer in const declaration
+  // 常量声明中缺少初始值设定项
+
+</script>
+
+</html>

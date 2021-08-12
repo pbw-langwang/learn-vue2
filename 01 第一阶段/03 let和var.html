@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <button>按钮1</button>
+  <button>按钮2</button>
+  <button>按钮3</button>
+  <button>按钮4</button>
+  <button>按钮5</button>
+</body>
+
+<script>
+  var func;
+  if (true) {
+    var name = "aaa";
+    func = function () {
+      console.log(name);
+    }
+  }
+  name = "bbb";
+  func();
+
+  var func2;
+  if (true) {
+    let name2 = "aaa";
+    func2 = function () {
+      console.log(typeof (name2) + ":" + name2);
+    }
+  }
+  name2 = "bbb";
+  func2();
+
+  let func3;
+  if (true) {
+    let name3 = "aaa";
+    //var func3 = function () {  //会报错已经声明了func3
+    func3 = function () {
+        console.log(typeof (name3) + ":" + name3);
+    }
+  }
+  name3 = "bbb";
+  func3();
+
+  // 报错
+  // if (true) {
+  //   let name3 = "aaa";
+  //   let func4 = function () {
+  //       console.log(typeof (name3) + ":" + name3);
+  //   }
+  // }
+  // name3 = "bbb";
+  // func4();
+
+  if (true) {
+    let name3 = "aaa";
+    var func5 = function () {
+        console.log(typeof (name3) + ":" + name3);
+    }
+  }
+  name3 = "bbb";
+  func5();
+
+  if (true) {
+    var name5 = "aaa";
+    var func5 = function () {
+        console.log(typeof (name3) + ":" + name3);
+    }
+  }
+  name5 = "bbb";
+  func5();
+
+
+
+
+  
+
+  //var
+  var btns = document.getElementsByTagName("button");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      console.log(i);
+    })
+  }
+
+  //闭包
+  //为什么闭包可以解决问题？因为函数是有作用域的，传进去的值是有作用域的
+  for (var i = 0; i < btns.length; i++) {
+    (function (num) {
+      btns[num].addEventListener("click", function () {
+        console.log(num);
+      })
+    })(i)
+  }
+
+  //let
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      console.log(i);
+    })
+  }
+</script>
+
+</html>

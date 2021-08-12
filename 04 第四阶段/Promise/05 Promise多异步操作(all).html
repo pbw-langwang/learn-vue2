@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // ajax写法
+  // let resultUrl1 = false;
+  // let resultUrl2 = false;
+  // $.ajax({
+  //   url:"url1",
+  //   success:()=>{
+  //     resultUrl1 = true;
+  //     handleResultUrl();
+  //   }
+  // });
+  // $.ajax({
+  //   url:"url2",
+  //   success:()=>{
+  //     resultUrl2 = true;
+  //     handleResultUrl();
+  //   }
+  // });
+
+  // 因为不知道先执行哪一个函数
+  // function handleResultUrl(){
+  //   if(resultUrl1 && resultUrl2){
+  //     // ....
+  //   }
+  // }
+
+  
+  setTimeout(()=>{
+    console.log("一秒了");
+  },1000)
+
+  // Promise all写法
+  Promise.all([
+    // all需要我们传入的是iterable(可迭代对象 --> 可遍历)---> es6的
+    new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve({
+          name:"pbw",
+          age:20
+        })
+      },2000)
+    }),
+    new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        resolve({
+          name:"wcz",
+          age:22
+        })
+      },1000)
+    })
+  ]).then(res=>{
+    // 返回的是数组
+    console.log(res);
+  })
+  </script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="app">
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn2></cpn2>
+    <cpn2></cpn2>
+    <cpn2></cpn2>
+  </div>
+</body>
+<template id="cpn">
+  <div>
+    <h2>计数器的值：{{num}}</h2>
+    <button @click="add">+</button>
+    <button @click="de">-</button>
+  </div>
+</template>
+<script>
+  Vue.component("cpn",{
+    template:"#cpn",
+    data(){
+      return{
+        num: 0
+      }
+    },
+    methods:{
+      add(){
+        this.num++
+      },
+      de(){
+        this.num--
+      }
+    }
+  })
+
+  let obj = {
+    num : 0
+  }
+  Vue.component("cpn2",{
+    template:"#cpn",
+    data(){
+      return obj
+    },
+    // 已经是一个对象了，所以返回就不需要用{}把obj括起来，括起来反而会报错
+    // Property or method "num" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property.
+    //属性或方法 “num” 未在实例上定义，但在呈现期间被引用。通过初始化属性，确保此属性是被动的，无论是在data选项中，还是对于基于类的组件。
+    methods:{
+      add(){
+        this.num++
+      },
+      de(){
+        this.num--
+      }
+    }
+  })
+
+  const va = new Vue({
+    el:".app",
+  })
+
+
+  //验证函数每次执行都是一个单独的空间存储
+  function a(){
+    return {
+      name:"pbw",
+      age:21
+    }
+  }
+  //不是同一个对象
+  const p1 = a();
+  const p2 = a();
+  const p3 = a();
+  p1.name="wcz"
+  console.log(p1);
+  console.log(p2);
+  console.log(p3);
+
+  const people = {
+    name:"zb",
+    age:23
+  }
+  function b(){
+    return people
+  }
+  //是同一个对象,为什么？
+  //因为对象是内存地址，而return返回的就是内存地址，没有大括号就没有每次新创建对象，那么每次使用的都是上面的
+  const z1 = b();
+  const z2 = b();
+  const z3 = b();
+  z1.name = "yzc";
+  console.log(z1);
+  console.log(z2);
+  console.log(z3);
+
+  function c(){
+    return a = 10;
+  }
+  let c1 = c();
+  const c2 = c();
+  let c3 = c();
+  c1 = c1 -4;
+  // c2 = c2 -5;
+  // 会报错：Assignment to constant variable
+  // 翻译：常量变量赋值
+  console.log(c1);
+  console.log(c2);
+  console.log(c3);
+
+  let x = 10;
+  function d() {
+    return x;
+  }
+  let d1 = d();
+  let d2 = d();
+  d1 = d1 - 4;
+  d1 = d2 - 6;
+  console.log(d1);
+  console.log(d2);
+</script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="app">
+    <p>{{num}}</p>
+    <cpn @cpnreduce="changefun" @cpnadd="changefun"></cpn>
+    <cpn @cpnreduce="reducefun" @cpnadd="addfun"></cpn>
+    <p>{{num}}</p>
+  </div>
+</body>
+<template id="cpn">
+  <div>
+    <!-- <p>{{cnum}}</p> -->
+    <button @click="reduce">-</button>
+    <button @click="add">+</button>
+  </div>
+</template>
+<script>
+  // template只能使用id，不能使用class
+  let cpn = {
+    template:"#cpn",
+    // props:{
+    //   cnum:{
+    //     type:Number,
+    //     default:10
+    //   }
+    // },
+    data(){
+      return{
+        cnum:0
+      }
+    },
+    methods:{
+      reduce(){
+        //1、这样写会延时(加、减一样)
+        // this.$emit("cpnreduce",this.cnum--);
+        //
+        //let rs = this.cnum--;
+        //this.$emit("cpnreduce", rs);
+
+        //2、这样写不延时
+        // this.cnum--;
+        // this.$emit("cpnreduce",this.cnum);
+
+        this.$emit("cpnreduce", --this.cnum);
+      },
+      add(){
+        // this.cnum++;
+        // this.$emit("cpnreduce", this.cnum);
+
+        this.$emit("cpnreduce", ++this.cnum);
+      },
+    }
+  }
+
+  let va = new Vue({
+    el:".app",
+    data:{
+      num:0
+    },
+    methods:{
+      addfun(res){
+        // console.log(this.num);
+        this.num = res;
+      },
+      reducefun(res){
+        // console.log(this.num);
+        this.num = res;
+      },
+
+      // 简单的方法
+      changefun(res){
+        this.num = res;
+      }
+    },
+    components:{
+      cpn,
+    }
+  })
+</script>
+</html>

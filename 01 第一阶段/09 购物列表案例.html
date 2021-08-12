@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .tableform {
+      /* border: solid 2px; */
+      border-collapse: collapse;
+    }
+
+    .tableform td,
+    .tableform th {
+      /* box-sizing: border-box;
+      width: 100px; */
+      border: solid 2px;
+      /* margin: 0 10px;   设置margin无效*/
+      padding: 5px 15px;
+    }
+
+    .tableform tr:first-child {
+      background-color: gainsboro;
+    }
+
+    .tableform th:nth-child(2) {
+      box-sizing: border-box;
+      width: 200px;
+    }
+
+    .tableform th:nth-child(4) {
+      box-sizing: border-box;
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- <div v-if="show"> -->
+    <div v-if="booklist.length">
+      <table class="tableform">
+        <tr>
+          <th></th>
+          <th>书籍名称</th>
+          <th>出版时间</th>
+          <th>单价</th>
+          <th>购买数量</th>
+          <th>操作</th>
+        </tr>
+
+        <tr v-for="(item,index) in booklist" :key="item.bookname">
+          <td>{{item.id}}</td>
+          <td>《{{item.bookname}}》</td>
+          <td>{{item.issue}}</td>
+          <!-- <td>￥{{item.price}}</td> 不加的话就会显示整数-->
+          
+          <!-- <td>￥{{item.price.toFixed(2)}}</td> -->
+
+          <!-- 过滤器 -->
+          <td>{{item.price | finalprice()}}</td>
+
+
+          <td>
+            <!-- <button @click="reduce(item.count,index)">-</button> -->
+            <button @click="reduce(item.count,index)" :disabled="item.count <= 0">-</button>
+            <span>{{item.count}}</span>
+            <button @click="increase(item.count,index)">+</button>
+          </td>
+          <td>
+            <button @click="deletelist(index)">删除</button>
+          </td>
+        </tr>
+        <!-- <p>总价：{{sumMoney}}</p>  放这里会跑上面去-->
+      </table>
+
+      <p>总价：{{sumMoney | finalprice()}}</p>
+    </div>
+
+    <div v-else>
+      <h2>购物车暂无物品！！！</h2>
+    </div>
+  </div>
+</body>
+
+<script>
+  let va = new Vue({
+    el: ".app",
+    data: {
+      show: true,
+      booklist: [
+        {
+          id: 1,
+          bookname: "算法导论",
+          issue: "2006-9",
+          price: 98.00,
+          count: 0,
+        },
+        {
+          id: 2,
+          bookname: "UNIX编译艺术",
+          issue: "2006-2",
+          price: 80.00,
+          count: 0,
+        },
+        {
+          id: 3,
+          bookname: "编译原理",
+          issue: "2000-1",
+          price: 88.00,
+          count: 0,
+        },
+        {
+          id: 4,
+          bookname: "代码大全",
+          issue: "2012-9",
+          price: 138.00,
+          count: 0,
+        }
+      ]
+    },
+    methods: {
+      reduce(count, i) {
+        if (count > 0) {
+          this.booklist[i].count--;
+        };
+      },
+      increase(count, i) {
+        // this.booklist[i].count++;
+
+        //1、xxx++,容易出现bug
+        // let rs = this.booklist[i].count++;
+        // this.booklist[i].count = rs;
+        // console.log(this.booklist[i].count);
+
+        
+        let rs = this.booklist[i].count+1;
+        this.booklist[i].count = rs;
+        console.log(this.booklist[i].count);
+      },
+
+      // 不能用delete，会报错：避免使用JavaScript的一元操作符作为属性名
+      deletelist(i) {
+        this.booklist.splice(i, 1);
+        if (this.booklist.length === 0) {
+          this.show = !this.show;
+        }
+      }
+    },
+    filters: {
+      finalprice(price) {
+        return "￥" + price.toFixed(2);
+      }
+    },
+    computed: {
+      sumMoney: function () {
+        let sum = 0;
+        // for (let i = 0; i < this.booklist.length; i++) {
+        //   sum = sum + this.booklist[i].count * this.booklist[i].price;
+        // };
+
+        // for (let i = 0; i < this.booklist.length; i++) {
+        //   let book = this.booklist[i];
+        //   sum = sum + book.count * book.price;
+        // };
+
+        // for (let i in this.booklist) {
+        //   let book = this.booklist[i];
+        //   sum = sum + book.count * book.price;
+        // }
+
+        for (let i of this.booklist) {
+          // console.log(i);
+          sum = sum + i.count * i.price;
+        }
+
+
+        return sum;
+      }
+    }
+  })
+</script>
+
+</html>

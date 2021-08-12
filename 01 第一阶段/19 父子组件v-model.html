@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<!-- 需求：双向绑定，实现实时修改父子组件中的相关值，然后下面的必须是上面的100倍，上面是下面的1/100 -->
+<body>
+  <div id="app">
+    <cpn :cnum1="num1" :cnum2="num2" @num1change="num1Ch" @num2change="num2Ch"></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <h3>{{cnum1}}+{{typeof cnum1}}</h3>
+      <input type="text" v-model="cnum1">
+      <h3>{{cnum2}}+{{typeof cnum2}}</h3>
+      <input type="text" v-model="cnum2">
+      <!-- 直接修改数值导致cnum改变时，
+        报错：Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. 
+        翻译：避免直接变异道具，因为每当父组件重新呈现时，该值都会被覆盖。相反，使用数据或计算属性的基础上的道具的价值。
+        解释：子组件和父组件都可以修改cnum会让页面逻辑不清晰，所以vue禁止了
+      -->
+
+      <!-- 解决方法，见行,和该行代码 -->
+      <h3>props:{{cnum1}}+{{typeof cnum1}}</h3>
+      <h3>data:{{denum1}}</h3>
+      <input type="text" v-model="denum1" @input="num1Input"> 
+      <!-- 这样也可以解决，加一个@input="num1Input" -->
+      <h3>props:{{cnum2}}+{{typeof cnum2}}</h3>
+      <h3>data:{{denum2}}</h3>
+      <input type="text" v-model="denum2">
+      <!-- 只解决了改变子组件的，父组件的改变不了 -->
+
+      <!-- 继续解决，见行，和该行代码-->
+      <h3>props:{{cnum1}}+{{typeof cnum1}}</h3>
+      <h3>data:{{denum1}}</h3>
+      <input type="text" :value="denum1" @input="num1Input">
+      <h3>props:{{cnum2}}+{{typeof cnum2}}</h3>
+      <h3>data:{{denum2}}</h3>
+      <input type="text" :value="denum2" @input="num2Input">
+    </div>
+  </template>
+
+  <script>
+    const va = new Vue({
+      el:"#app",
+      data:{
+        num1:1,
+        num2:2,
+      },
+      components:{
+        cpn:{
+          template:"#cpn",
+          props:{
+            cnum1:Number,
+            cnum2:Number
+          }, //可以把这个提出去
+          data(){
+            return {
+              denum1:this.cnum1,
+              denum2:this.cnum2
+            }
+          },
+          methods:{
+            num1Input(event){
+              console.log(event);
+              this.denum1 = event.target.value;
+              //this.$emit("num1change",event);  //后面的是传值，前面的抛出的方法
+              // 更简单的写法：
+              this.$emit("num1change",this.denum1);
+
+              //最后一步完善
+              this.denum2 = this.denum1 * 100;
+              this.$emit("num2change", this.denum2);
+            },
+            num2Input(event){
+              console.log(event);
+              this.denum2 = event.target.value;
+              // this.$emit("num2change", event);
+              this.$emit("num2change", this.denum2);
+              
+              //最后一步完善
+              this.denum1 = this.denum2 / 100;
+              this.$emit("num1change", this.denum1);
+            }
+          }
+        }
+      },
+      methods:{
+        num1Ch(e){
+          console.log(e);
+          //this.num1 = parseInt(e.target.value);
+          this.num1 = parseFloat(e);
+        },
+        num2Ch(e) {
+          console.log(e);
+          // this.num2 = parseInt(e.target.value);
+          this.num2 = parseInt(e);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

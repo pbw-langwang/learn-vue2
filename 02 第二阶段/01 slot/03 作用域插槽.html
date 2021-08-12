@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <comp>
+      
+    </comp>
+
+    <comp>
+      <!-- 这里只能使用 slot-scope="slot" -->
+      <template slot-scope="slot">
+        <!-- 这里一定是 slot.XXX -->
+        <!-- <span v-for="i in slot.abc">{{i}} - </span> -->
+        <span>{{slot.abc.join(" - ")}}</span>
+      </template>
+    </comp>
+
+    <comp>
+      <!-- vue  2.5.x以上的版本可以用template以外的其它标签 -->
+      <div slot-scope="slot">
+        <!-- <span v-for="i in slot.abc">{{i}} * </span> -->
+        <span>{{slot.abc.join(" * ")}}</span>
+      </div>
+    </comp>
+  </div>
+
+  <template id="comp">
+    <div>
+      <!-- 这里最好用data，因为是取的值 -->
+      <slot :abc="arr">
+        <ul>
+          <li v-for="i in arr">{{i}}</li>
+        </ul>
+      </slot>
+    </div>
+  </template>
+
+  <script>
+    const comp = {
+      template:"#comp",
+      data(){
+        return {
+          arr:[
+            "墨菲定律",
+            "狼王梦",
+            "狼国女王",
+            "牧羊犬阿杜",
+            "别让急性子毁了你",
+            "从你的全世界路过",
+          ]
+        }
+      }
+    }
+
+    const va = new Vue({
+      el:"#app",
+      data:{},
+      methods:{},
+      components:{
+        comp
+      },
+      computed:{},
+      filters:{},
+    })
+  </script>
+</body>
+</html>

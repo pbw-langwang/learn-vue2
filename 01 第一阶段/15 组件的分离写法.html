@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<lang lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="app">
+    <cpn></cpn>
+    <cpn2></cpn2>
+    <cpn3></cpn3>
+    <cpn4></cpn4>
+  </div>
+</body>
+
+<!-- 2、template标签 -->
+<template id="cpn2">
+  <div>
+    <h2>This is a title!</h2>
+    <p>{{m}}</p>
+  </div>
+</template>
+
+<!-- 1、script标签，注意类型一定是：text/x-template -->
+<script type="text/x-template" id="cpn">
+  <div>
+    <h2>这是一个标题1</h2>
+  </div>
+</script>
+
+<!-- 有语法糖，但是不要忘了，局部组件的时候，还是得先进行templete（见 65行），而不能直接使用id来获取页面上的 -->
+<template id="cpn3">
+  <div>
+    <h2>This is a title2!</h2>
+  </div>
+</template>
+
+<template id="cpn4">
+  <div>
+    <h2>This is a title3!</h2>
+    <p>{{m}}</p>
+  </div>
+</template>
+
+<script>
+  Vue.component("cpn", {
+      template: "#cpn"
+    }
+  );
+
+  Vue.component("cpn2", {
+      template: "#cpn2",
+      data(){
+        return{
+          m:"aaaa"
+        }
+      }
+    }
+  );
+
+  let cpn3 = Vue.extend({
+    template:"#cpn3"
+  });
+  /*
+    **或者写成(最简)
+    let cpn3 ={
+      template:"#cpn3"
+    };
+
+    **或者写成
+    let cpn3 =({
+      template:"#cpn3"
+    });
+  */
+
+  let cpn4 = {
+    template:"#cpn4",
+    data(){
+      return {
+        "m":"bbbb"
+      }
+    }
+  }
+
+  let va = new Vue({
+    el: ".app",
+    data: {},
+    methods: {},
+    components: {
+      "cpn3":cpn3,
+      // 不能写成
+      // "cpn3":"#cpn3",
+      // 报错：Invalid Component definition: #cpn3
+      // 无效的组件定义
+      cpn4
+    },
+    computed: {},
+    filters: {}
+  })
+</script>
+
+</html>

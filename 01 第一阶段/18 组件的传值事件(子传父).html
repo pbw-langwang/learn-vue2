@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- <cpn @cpnclick="btnclick1('aaaa')"></cpn> -->
+    <cpn @cpnclick="btnclick1"></cpn>
+    <!-- 带了括号，就相当传值了，所以打印出来的也是undefined，见05 v-on参数问题 -->
+    <cpn @cpnclick="btnclick1()"></cpn>
+  </div>
+</body>
+<template id="cpn">
+  <div>
+    <button v-for="item in list" :key="item.index" @click="btnclick(item)">{{item.name}}</button>
+  </div>
+</template>
+<script>
+  let cpn = {
+    template:"#cpn",
+    data(){
+      return{
+        list:[
+          {index:1,name:"aaaa"},
+          {index:2,name:"bbbb"},
+          {index:3,name:"bbbb"},
+          {index:4,name:"cccc"},
+        ]
+      }
+    },
+    methods:{
+      btnclick(item){
+        console.log("btnclick");
+        console.log(item);
+        // 1、发射事件
+        this.$emit("cpnclick",item);//cpnclick是自定义事件，不要使用驼峰写法
+      }
+    }
+  }
+  let va = new Vue({
+    el:".app",
+    data:{},
+    methods:{
+      // 2、没写参数，则这个item是 子组件中传递的默认值 ，而不是浏览器得默认值（event）了，
+      //因为是自定义事件;如果写了参数，则没有默认参数了
+      // btnclick1(a,item){
+      //   console.log("cpnclick");
+      //   console.log(item);
+      //   console.log(a);
+      // }
+      btnclick1(item){
+        console.log("cpnclick");
+        console.log(item);
+      }
+    },
+    components:{
+      cpn,
+    },
+    filters:{},
+    computed:{}
+  })
+</script>
+</html>

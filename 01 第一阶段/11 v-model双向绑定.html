@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="app">
+    <input type="text" v-model="message">
+
+    <!-- lazy修饰符，按下回车才触发 -->
+    <input type="text" v-model.lazy="message">
+
+    <!-- v-model是两个操作的结合 -->
+    <input type="text" v-bind:value="message" v-on:input="changvalue">
+
+    <!-- 两个结合的简单方法 -->
+    <!-- 直接在html上使用 浏览器事件 时，必须使用$event，而不能是$e -->
+    <input type="text" v-bind:value="message" v-on:input="message = $event.target.value">
+
+    <!-- 修改input里面，外面也会变，说明修改了data里面的数据；mustache语法无法做到 -->
+    <h2>
+      {{message}}
+    </h2>
+  </div>
+
+  <div class="num">
+    <!-- v-model赋值默认都是string类型 -->
+    <input type="number" v-model="message">
+    <h2>{{message}}-----{{typeof message}}</h2>
+
+    <input type="number" v-model="age">
+    <h2>{{age}}-----{{typeof age}}</h2>
+
+    <input type="number" v-model.number="age1">
+    <h2>{{age1}}-----{{typeof age1}}</h2>
+  </div>
+</body>
+<script>
+  let va = new Vue({
+    el: ".app",
+    data: {
+      message: "hhhh"
+    },
+    methods: {
+      changvalue(e) {
+        console.log(e);
+        this.message = e.target.value;
+      }
+    },
+    computed: {
+
+    },
+    filters: {
+
+    }
+  })
+
+  let vn = new Vue({
+    el: ".num",
+    data: {
+      message: "",
+      age: 0,
+      age1: 0
+    }
+  })
+</script>
+
+</html>

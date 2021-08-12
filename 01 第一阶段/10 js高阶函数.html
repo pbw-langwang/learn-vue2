@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  let arr = [10, 20, 111, 222, 333, 40, 50];
+
+  let total = arr.filter(x => {
+    return x < 100;
+  }).map(x => {
+    return x * 2;
+  }).reduce(((x, i) => {
+    return x + i;
+  }), 0)
+  // 都要记得return
+  // 函数式编程
+
+  let tot = arr.filter(x => x < 100).map(x => x * 2).reduce((pre, n) => pre + n);
+
+  console.log(total);
+  console.log(tot);
+</script>
+
+</html>

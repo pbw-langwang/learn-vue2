@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cpn></cpn>
+    <!-- 最好不要用单标签 -->
+    <cpn ref="a"></cpn>
+    <button @click="btnclick">按钮</button>
+  </div>
+
+  <template id="tp1">
+    <div>
+      <h3>我是子组件</h3>
+    </div>
+  </template>
+
+  <script>
+    const cpn = {
+      template:"#tp1",
+      methods:{
+        showmessage(){
+          console.log("showmessage")
+        }
+      },
+      data(){
+        return {
+          why:{
+            name:"pbw",
+            age:20,
+            height:1.76,
+          }
+        }
+      }
+    };
+
+    const va = new Vue({
+      el:"#app",
+      data:{},
+      methods:{
+        // 一般开发用$children比较少，因为其获取元素要靠下标，但是后期修改之后可能会改变,只有拿所有组件时会用到
+        // btnclick(){
+        //   console.log(this.$children);
+        //   this.$children[0].showmessage();
+        //   console.log(this.$children[0].why);
+        // }
+
+        // $refs  ---> 对象类型，默认其是空对象 ---> 要使用要在组件上加上ref="" ---> 很常用
+        btnclick(){
+          console.log(this.$refs);
+          console.log(this.$refs.a.why);
+        }
+      },
+      components:{
+        cpn,
+      },
+      filters:{},
+      computed:{}
+    });
+  </script>
+</body>
+</html>

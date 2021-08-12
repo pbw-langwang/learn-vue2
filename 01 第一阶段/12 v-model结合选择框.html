@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="radio">
+    <div>
+      <input type="radio" name="sex" id="male" value="男" v-model="sex">
+      <label for="male">男</label>
+    </div>
+    <div>
+      <input type="radio" name="sex" id="fmale" value="女" v-model="sex">
+      <label for="fmale">女</label>
+    </div>
+    <div>
+      <p>您选择的是：{{sex}}</p>
+    </div>
+
+    <!-- 可以去掉name，而且是双向绑定 -->
+    <div>
+      <input type="radio" id="life" value="活" v-model="life">
+      <label for="life">活</label>
+    </div>
+    <div>
+      <input type="radio" id="ded" value="死" v-model="life">
+      <label for="ded">死</label>
+    </div>
+    <div>
+      <p>您选择的是：{{life}}</p>
+    </div>
+  </div>
+
+  <div class="check">
+    <!-- checkbox单选框 -->
+    <div>
+      <label>
+        <input type="checkbox" value="agree" v-model="agree">同意协议
+      </label>
+      <h2>agree={{agree}}</h2>
+      <button :disabled="!agree">下一步</button>
+    </div>
+
+    <!-- checkedbox多选框 -->
+    <label>
+      <input type="checkbox" value="篮球" v-model="love">篮球
+    </label>
+
+    <!-- 不写value则点击任意一个，其它全部选中，而且值为null -->
+    <!-- <input type="checkbox" v-model="love">足球
+    <input type="checkbox" v-model="love">乒乓球
+    <input type="checkbox" v-model="love">羽毛球 -->
+    <label>
+      <input type="checkbox" value="足球" v-model="love">足球
+    </label>
+    <label>
+      <input type="checkbox" value="乒乓球" v-model="love">乒乓球
+    </label>
+    <label>
+      <input type="checkbox" value="羽毛球" v-model="love">羽毛球
+    </label>
+    <h2>您的爱好是：{{love}}</h2>
+  </div>
+
+
+  <!-- select不常用了 -->
+
+  <div class="select">
+    <!-- select单选 -->
+    <div>
+      <select name="abc" v-model="fruit">
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="榴莲">榴莲</option>
+        <option value="芒果">芒果</option>
+      </select>
+      <h2>您选择的是：{{fruit}}</h2>
+    </div>
+
+    <!-- select多选 -->
+    <div>
+      <!-- 如果fruits不是数组，会报错： 
+        [Vue warn]: <select multiple v-model="fruits"> expects an Array value 
+          for its binding, but got String-->
+
+      <!-- 按住CTRL才能多选 -->
+      <select name="aaa" v-model="fruits" multiple size="2">
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="榴莲">榴莲</option>
+        <option value="芒果">芒果</option>
+      </select>
+      <h2>您选择的是：{{fruits}}</h2>
+    </div>
+  </div>
+
+  <div class="app">
+    <label v-for="item in originFruits" :for="item">
+      <input type="checkbox" :id="item" v-model="fruits" :value="item">{{item}}
+    </label>
+    <h2>您喜欢的水果是：{{fruits}}</h2>
+  </div>
+</body>
+
+<script>
+  let vr = new Vue({
+    el: ".radio",
+    data: {
+      sex: "",
+      life: "活",
+    }
+  })
+
+  let vc = new Vue({
+    el: ".check",
+    data: {
+      agree: false, //单选框,boolean类型
+      love: [], //多选框
+    }
+  })
+
+  let vs = new Vue({
+    el: ".select",
+    data: {
+      fruit: "香蕉", //单选框,String类型
+      // fruits: "",
+      fruits: [], //多选框
+    }
+  })
+
+  let va = new Vue({
+    el: ".app",
+    data: {
+      fruits: [],
+      originFruits: ["芒果", "香蕉", "苹果", "西瓜", "荔枝", "水蜜桃", "哈密瓜"]
+    }
+  })
+</script>
+
+</html>
