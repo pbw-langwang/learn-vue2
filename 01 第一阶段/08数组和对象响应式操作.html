@@ -13,6 +13,7 @@
     <ul>
       <li v-for="item in list">{{item}}</li>
     </ul>
+    <p>{{s.name}}</p>
     <button @click="click">按钮</button>
   </div>
 </body>
@@ -20,14 +21,25 @@
   let vm = new Vue({
     el: "#app",
     data: {
-      list: ["a", "b", "c", "d"]
+      list: ["a", "b", "c", "d"],
+      s:{
+        name:"wcz",
+        age:23
+      },
     },
     methods: {
       click() {
         this.list.reverse();
+        this.s.name = "zb";
       }
     }
   })
+  /**不能检测到的数组变动是：
+  1、当利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue；
+  2、当修改数组的长度时，例如：vm.items.length = newLength；
+  不能检测到的对象变动是：
+  3、向响应式对象添加属性；
+  4、向响应式对象删除属性；**/
 </script>
 
 </html>
