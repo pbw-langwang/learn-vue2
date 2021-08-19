@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    p{
+      font-size: 1rem;
+    }
+  </style>
+  <script>
+    const getWidth=()=>{
+      const cw = document.documentElement.clientWidth;
+      const fs = (20*(cw/320))>40? 40+"px" : (20*(cw/320))+"px";
+      document.documentElement.style.fontSize=fs;
+    }
+    window.addEventListener("load",getWidth);
+    window.addEventListener("resize",getWidth);
+    </script>
+</head>
+<body>
+  <p>123</p>
+</body>
+</html>

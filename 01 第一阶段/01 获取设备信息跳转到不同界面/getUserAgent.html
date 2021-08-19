@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 获取设备信息
+  const redirect=()=>{
+    const userAgent = navigator.userAgent.toLowerCase();
+    const device = /ipad|iphone|mdip|rv:1.2.3.4|ucweb|android|window ce|window mobile/; 
+    if(device.test(userAgent)){
+      window.location.href="./move.html";
+    }else{
+      window.location.href="./pc.html";
+    }
+  }
+  redirect();
+  
+  // 测试时，切换不同的设备就重新输入一次getUserAgent.html
+</script>
+</html>
