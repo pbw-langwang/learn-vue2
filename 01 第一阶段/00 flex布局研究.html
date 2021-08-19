@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 300px;
+      height: 500px;
+      background-color: red;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    /* flex布局, 如果宽度不够让设置的宽度显示而且不换行, 那么会裁剪使其平均分布 */
+    .box div{
+      width: 100px;
+      height: 100px;
+      background-color: aqua;
+    }
+    .box1{
+      justify-content: space-around;
+      align-items: center;
+    }
+    .box2{
+      /* 没有设置wrap,那么和box一样 */
+      justify-content: space-around;
+      align-content: center;
+    }
+    .box3{
+      /* 没有设置wrap,那么和box一样 */
+      /* 和box1一样的效果 */
+      justify-content: space-around;
+      align-content: space-around;
+    }
+    .box4 div{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+      /* 设置基准值则宽度失效 */
+      flex-basis: 30%; /* 300px(父元素)*30%=90px */
+    }
+    /*
+      计算方式：300-50-100-30 = 120
+               120/(1+2+1) = 30
+      第一个：50+30=80
+      第二个：100+30*2=160
+      第三个：30+30=60
+    */
+    .box5 div:nth-child(1){
+      flex-basis: 50px;
+      flex-grow: 1;
+      background-color: pink;
+    }
+    .box5 div:nth-child(2){
+      flex-basis: 100px;
+      flex-grow: 2;
+      background-color: red;
+    }
+    .box5 div:nth-child(3){
+      flex-basis: 30px;
+      flex-grow: 1;
+      background-color: sandybrown;
+    }
+
+    .box6{
+      width: 300px;
+      height: 500px;
+      background-color: blue;
+      display: flex;
+    }
+    .box6 div{
+      width: 100px;
+      height: 100px;
+    }
+    .box6 div:nth-child(1){
+      flex-basis: 200px;
+      flex-shrink: 0;
+      background-color: chartreuse;
+    }
+    .box6 div:nth-child(2){
+      flex-basis: 200px;
+      flex-shrink: 0;
+      background-color: cyan;
+    }
+
+    /*
+    计算方式：200+200-300=100
+             100/(2+3)=20
+    第一个：200-2*20=160
+    第二个：200-3*20=140
+    */
+    .box7 div:nth-child(1){
+      flex-basis: 200px;
+      flex-shrink: 2;
+      background-color: chartreuse;
+    }
+    .box7 div:nth-child(2){
+      flex-basis: 200px;
+      flex-shrink: 3;
+      background-color: cyan;
+    }
+
+    /* 注意：flex是flex-grow、flex-shrink、flex-basis的缩写，注意顺序 */
+    /*
+      flex:auto --> flex:1 1 auto
+      flex:none --> flex:0 0 auto
+      flex:0% --> flex: 1 1 0%
+      flex:100px --> flex:1 1 100px
+      flex:1 --> flex: 1 1 0%
+    */
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box1 box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box2 box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box3 box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box4 box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box5 box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box6">
+    <div>1</div>
+    <div>2</div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="box6 box7">
+    <div>1</div>
+    <div>2</div>
+  </div>
+</body>
+</html>
