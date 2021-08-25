@@ -13,13 +13,16 @@
     <aaa></aaa>
     <!-- 组件也是有作用域的，你要使用：1、全局注册 2、在要放入的挂载元素上声名 -->
     <!-- <www></www>  //报错：未定义的www element-->
+    <bb></bb>
     <hr>
 
     <div>
       <yyy v-if="show"></yyy>
       <button @click="click">按钮1</button>  <!--控制yyy和my-cpn-->
     </div>
-    <my-cpn v-if="!show"></my-cpn>  <!-- 这个show是父组件里面的show决定的 -->
+    <my-cpn v-if="!show">
+      <!-- <www></www> 写进来也是无用的 -->
+    </my-cpn>  <!-- 这个show是父组件里面的show决定的 -->
   </div>
 </body>
 
@@ -45,7 +48,7 @@
   const cpn1 = Vue.extend({
     template: `
       <div>
-        <p>全局/局部  组件yyy</p>
+        <p>全局组件yyy</p>
         <p>也是局部组件www</p>
         <input type="text">
       </div>
@@ -62,11 +65,11 @@
     },
     template: `
         <div>
-          <h2>这是标题2</h2>
           <p>局部组件my-cpn</p>
           <www></www>
           <yyy v-if="!show"></yyy>
           <button @click="click">按钮2</button> 
+          <bb></bb>
           <!--控制这个yyy，show也是该组件里面的，而不能访问vue实例中的-->
         </div>
       `,
@@ -102,7 +105,8 @@
     filters: {},
     computed: {},
     components: {
-      'my-cpn': cpn2
+      'my-cpn': cpn2,
+      'bb':cpn1
     },
   })
 </script>
