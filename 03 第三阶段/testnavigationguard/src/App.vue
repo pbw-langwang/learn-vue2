@@ -4,7 +4,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/profile" tag="button">Profile</router-link>
-      <!-- tag已经不被支持，应该使用v-slot -->
     </div>
     <router-view/>
   </div>
