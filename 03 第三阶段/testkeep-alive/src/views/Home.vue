@@ -6,7 +6,9 @@
     <router-link to="/news">新闻</router-link> | 
     <router-link to="/list">列表</router-link>
 
-    <router-view></router-view>
+    <!-- <keep-alive> -->
+      <router-view></router-view>
+    <!-- </keep-alive> -->
 
   </div>
 </template>
