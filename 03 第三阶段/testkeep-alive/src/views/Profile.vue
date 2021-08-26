@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name:"pro",
+  name:"ro",
   created(){
     console.log("Profile --> created --> 创建组件时调用")
   },

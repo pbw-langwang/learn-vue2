@@ -17,7 +17,8 @@ const routes = [
   //   name: 'Home',
   //   component: Home
   // },
-  // 上述代码会报错RangeError: Maximum call stack size exceeded，见：https://www.cnblogs.com/fairylee/p/10932877.html，大致就是循环跳转页面，导致栈超出大小
+  // 上述代码会报错RangeError: Maximum call stack size exceeded，见：https://www.cnblogs.com/fairylee/p/10932877.html，
+  //大致就是循环跳转页面，导致栈超出大小
   
   // {
   //   path: '',

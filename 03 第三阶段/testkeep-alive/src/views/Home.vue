@@ -33,18 +33,18 @@ export default {
   },
   //activated和deactivated这两个函数只有在有keep-alive的时候才可以调用
   activated(){
-    console.log("activated")
+    console.log("home --> activated")
     console.log(this.$route);
     this.$router.push(this.path);
   },
   deactivated(){
-    console.log("deactivated")
+    console.log("home --> deactivated")
     console.log(this.$route);
   },
   beforeRouteLeave (to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
-    // console.log(from);
+    console.log(from);
     this.path = from.path;
     next();
   }

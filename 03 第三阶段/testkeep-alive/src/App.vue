@@ -7,10 +7,10 @@
     </div>
 
     <!-- keep-alive就是为了防止组件频繁的创建和销毁，还可以使用activated和deactivated -->
-    <!-- 谁被包裹，谁就不会被频繁创建/销毁，但是不会层叠，及子元素中有跳转，子元素的还是会被频繁创建/销毁 -->
+    <!-- 谁被包裹，谁就不会被频繁创建/销毁，但是不会层叠，及子元素中有路由，子元素的还是会被频繁创建/销毁 -->
     <!-- 可以用exclude，这个就是name的一个作用，多个就是在中间加,，不要随便加空格 -->
     <!-- 一般和正则表达式有关的就不要随便加空格 -->
-    <keep-alive exclude="pro">
+    <keep-alive exclude="ro">
       <router-view/>
     </keep-alive>
 
@@ -18,6 +18,18 @@
     <router-view/> -->
   </div>
 </template>
+
+<script>
+export default {
+  name:"App",
+  created() {
+    console.log("App --> created");
+  },
+  destroyed() {
+    console.log("App --> destroyed");
+  },
+}
+</script>
 
 <style>
 #app {
