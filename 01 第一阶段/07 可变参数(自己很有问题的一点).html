@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  <body></body>
+  <script>
+    function a(...num) {
+      console.log(num);
+      console.log(arguments);
 
-<body>
+      let sum = 0;
+      let sum2;
+      let sum3;
+      let sum4 = 0;
+      let sum5 = 0;
 
-</body>
-<script>
-  function a(...num) {
-    console.log(num);
-    console.log(arguments);
+      for (let i = 0; i < num.length; i++) {
+        sum = sum + num[i];
+        console.log(sum); // 正确
+      }
 
-    let sum = 0;
-    let sum2;
-    let sum3;
-    let sum4 = 0;
+      for (let j = 0; j < num.length; j++) {
+        sum3 = sum3 + num[j];
+        console.log(sum3); // NAN
+      }
 
-    console.log(sum2);
+      for (let i = 0; i < num.length; i++) {
+        sum4 = sum4 + num[i];
+        console.log(sum4); // 正确
+      }
 
-    for (let i = 0; i < num.length; i++) {
-      sum = sum + num[i];
-      console.log(sum);
-    };
+      for (let i = 0; i < arguments.length; i++) {
+        // console.log(arguments[i]);
+        // console.log(typeof arguments[i]);
+        sum2 = sum2 + arguments[i];
+        console.log(sum2); // NAN
+      }
 
-    for (let j = 0; j < num.length; j++) {
-      sum3 = sum3 + num[j];
-      console.log(sum3); //NAN
-    };
+      for (let i = 0; i < arguments.length; i++) {
+        sum5 = sum5 + arguments[i];
+        console.log(sum5); // 正确
+      }
+    }
 
-    for (let i = 0; i < num.length; i++) {
-      sum4 = sum4 + num[i];
-      console.log(sum4);
-    };
-
-    for (let i = 0; i < arguments.length; i++) {
-      console.log(arguments[i]);
-      console.log(typeof (arguments[i]));
-      sum2 = sum + arguments[i];
-      console.log(sum2);
-    };
-  }
-
-  a(1, 2, 3, 4, 5, 6);
-</script>
-
+    a(1, 2, 3, 4, 5, 6);
+  </script>
 </html>
