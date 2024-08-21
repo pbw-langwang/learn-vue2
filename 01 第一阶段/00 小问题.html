@@ -1,64 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- 自定义标签
-  <script>
-    document.createElement(h2);
-  </script>
-  <style>
-    h2 {
-      font-size: 50px;
-      color: red;
-    }
-  </style> -->
-  
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-</head>
-<body>
-
-  <!-- vue小问题 -->
-  <div id="app">
-    {{a}}
-    <div>{{a}}
-      <div>{{a}}</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 自定义标签 -->
+    <script>
+      document.createElement("aaa");
+    </script>
+    <style>
+      aaa {
+        font-size: 50px;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- html小问题 - 自定义标签 -->
+    <div>
+      <aaa>hhhhhhh</aaa>
     </div>
-    <hr>
-    
-    <div>{{fristname}} &nbsp; {{lastname}}</div>
-    <div>{{fristname}} &nbsp;  {{lastname}}</div>
-    <div>{{fristname}}    {{lastname}}</div>
-    <hr>
-    <div>{{fristname +' '+lastname}}</div>
-    <div>{{fristname +'  '+lastname}}</div>
-    <div>{{fristname +' &nbsp;'+lastname}}</div>
-    <div>{{fristname +' &nbsp; '+lastname}}</div>
-    <div>{{fristname +' &nbsp;  '+lastname}}</div>
-  </div>
-
-
-  <!-- html小问题 - 自定义标签 -->
-  <!-- <div>
-    <h2>hhhhhhh</h2>
-  </div> -->
-</body>
-<script>
-  let va = new Vue({
-    el:"#app",
-    data:{
-      a:"zrh",//嵌套层数
-      fristname:"pbw",
-      lastname:"kobe"
-    }
-  })
-
-  const peo = {
-    p: aaa => {
-      console.log(this);
-    }
-  }
-  peo.p();
-</script>
+  </body>
 </html>
